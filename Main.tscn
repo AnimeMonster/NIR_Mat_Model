@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://media/ROV6.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://Engine.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Main.gd" type="Script" id=3]
+[ext_resource path="res://addons/orbit_camera/orbit_camera.gd" type="Script" id=4]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 5.90361, 0.575289, 2.45932 )
+
+[node name="Main" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="Apparat" type="RigidBody" parent="."]
+gravity_scale = 0.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Apparat"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Apparat/CollisionShape"]
+mesh = ExtResource( 1 )
+material/0 = null
+
+[node name="Engine" parent="Apparat" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.85, 0, -0.35 )
+u1 = -1
+u2 = -1
+
+[node name="Engine2" parent="Apparat" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.85, 0, 0.35 )
+u1 = -1
+u2 = 1
+
+[node name="Engine3" parent="Apparat" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.85, 0, -0.35 )
+u1 = 1
+u2 = -1
+
+[node name="Engine4" parent="Apparat" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.85, 0, 0.35 )
+u1 = 1
+u2 = 1
+
+[node name="Engine5" parent="Apparat" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.85, 1, -0.35 )
+
+[node name="Engine6" parent="Apparat" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.85, 1, 0.35 )
+
+[node name="Engine7" parent="Apparat" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.85, 1, -0.35 )
+
+[node name="Engine8" parent="Apparat" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.85, 1, 0.35 )
+
+[node name="Spatial" type="Spatial" parent="."]
+
+[node name="OrbitCamera" type="Camera" parent="Spatial"]
+transform = Transform( 0.725146, 0, 0.688595, 0, 1, 0, -0.688595, 0, 0.725146, 11.1879, 0, 12.8711 )
+script = ExtResource( 4 )
+ANCHOR_NODE_PATH = NodePath("..")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.001
+autostart = true
+
+[node name="Timer2" type="Timer" parent="."]
+wait_time = 0.001
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="Timer2" to="." method="_on_Timer2_timeout"]
